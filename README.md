@@ -1,2 +1,7 @@
 # docker-react-nest-mongo
-Docker Setup for React Nest amd Mongo (Boilerplate) with Hot reload directly in container {windows}
+Setup for React Nest and Mongo (Boilerplate) in Docker containers with hot reloads [Windows/MAC/Linux]
+
+```
+docker-compose up --build
+
+```
