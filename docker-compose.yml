@@ -1,0 +1,43 @@
+version: "3.7"
+
+services:
+  app:
+    container_name: app
+    command: sh -c "npm run start"
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - "./app:/app"
+    ports:
+      - 3001:3000
+    environment:
+      - NODE_ENV= development
+      - CHOKIDAR_USEPOLLING=true
+  api:
+    build: 
+      context: ./api
+      dockerfile: ./Dockerfile
+    container_name: api
+    command: sh -c "npm run start:dev"
+    restart:  on-failure
+    depends_on:
+      - mongo
+    volumes:
+      - "./api:/api"
+    environment:
+      - NODE_ENV= development
+    ports:
+        - "4000:4000"
+  mongo:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: quiz
+      MONGO_INITDB_ROOT_PASSWORD: quiz
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+volumes:
+  mongo:
